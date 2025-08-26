@@ -77,8 +77,10 @@ class TestAudioAnalyzer(unittest.TestCase):
         mock_load_audio.return_value = (mock_y, mock_sr)
         
         # Mock chroma features (12-dimensional)
-        mock_chroma_data = np.random.rand(12, 100)
-        mock_chroma_data[0, :] = 0.9  # Make C the strongest
+        mock_chroma_data = np.random.rand(12, 100) * 0.3  # Start with low values
+        mock_chroma_data[0, :] = 0.9  # Make C the strongest (index 0)
+        mock_chroma_data[4, :] = 0.7  # Major third (E) stronger
+        mock_chroma_data[3, :] = 0.5  # Minor third (D#) weaker
         mock_chroma.return_value = mock_chroma_data
         
         key = self.analyzer.detect_key("dummy_path.mp3")

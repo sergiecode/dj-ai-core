@@ -143,6 +143,9 @@ async def analyze_track(file: UploadFile = File(...)):
             # Clean up temporary file
             os.unlink(temp_file_path)
             
+    except HTTPException:
+        # Re-raise HTTPException with original status code
+        raise
     except Exception as e:
         logger.error(f"Error analyzing track {file.filename}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
@@ -187,6 +190,9 @@ async def recommend_transitions(request: Dict[str, Any]):
         logger.info(f"Generated {len(recommendations)} recommendations")
         return result
         
+    except HTTPException:
+        # Re-raise HTTPException with original status code
+        raise
     except Exception as e:
         logger.error(f"Error getting recommendations: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Recommendation failed: {str(e)}")

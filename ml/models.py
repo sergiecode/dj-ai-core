@@ -84,7 +84,7 @@ class TransitionPredictionModel:
         """
         try:
             if self.model is None:
-                self.build_model()
+                self.model = self.build_model()
             
             # Prepare validation data
             validation_data = None
